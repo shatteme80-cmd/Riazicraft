@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-apk:
     runs-on: ubuntu-latest
@@ -36,9 +39,21 @@ jobs:
       - name: Build Debug APK
         run: gradle :app:assembleDebug
 
-      - name: Upload Installable APK
+      - name: Rename APK for direct download
+        run: cp app/build/outputs/apk/debug/app-debug.apk RiaziCraft-v3.0.apk
+
+      - name: Publish Direct APK Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v3.0-run-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" RiaziCraft-v3.0.apk \
+            --title "RiaziCraft v3.0" \
+            --notes "فایل APK قابل نصب برنامه ریاضیکرفت (نسخه ۳.۰)"
+
+      - name: Upload Installable APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: RiaziCraft-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: RiaziCraft-v3.0.apk
           if-no-files-found: error
