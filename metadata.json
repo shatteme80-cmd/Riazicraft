@@ -1,0 +1,6 @@
+{
+  "name": "ریاضیکرفت",
+  "description": "اپلیکیشن آموزشی بازیمحور ریاضی نهم - فصل مجموعه‌ها و احتمال با چالش‌های تعاملی و آزمون پایانی",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
